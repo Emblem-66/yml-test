@@ -1,0 +1,16 @@
+image: quay.io/fedora:latest
+copr:
+    enable:
+        - xxmitsu/mesa-git
+packages:
+    include:
+        - htop
+        # rpmfusion needed
+        - steam
+        # copr needed
+        # the mesa-git repository only includes "update" for mesa related packages
+    exclude:
+        - firefox
+systemd:
+    enable:
+        flatpak-auto-update.service
