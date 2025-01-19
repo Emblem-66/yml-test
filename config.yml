@@ -1,4 +1,4 @@
-image: quay.io/fedora:latest
+image: quay.io/fedora/fedora-silverblue:latest
 copr:
     enable:
         - xxmitsu/mesa-git
