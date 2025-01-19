@@ -13,4 +13,4 @@ packages:
         - firefox
 systemd:
     enable:
-        rpm-ostreed-automatic.service
+        - rpm-ostreed-automatic.service
