@@ -16,7 +16,8 @@ systemd_services = config.get("systemd", {}).get("enable", [])
 with open("Dockerfile", "w") as dockerfile:
     dockerfile.write(f"FROM {base_image}\n")
     dockerfile.write("RUN dnf -y install dnf-plugins-core\n")
-
+    dockerfile.write("RUN dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm\n")
+    
     # Enable COPR repositories
     for repo in copr_repos:
         dockerfile.write(f"RUN dnf copr enable -y {repo}\n")
