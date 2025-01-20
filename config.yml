@@ -1,7 +1,16 @@
 image: quay.io/fedora/fedora-silverblue:latest
+version:
+
+repos:
+rpmfusion: True
+terra: True
 copr:
     enable:
         - xxmitsu/mesa-git
+
+modules:
+#modules - programs that require more than single package install, for 
+
 packages:
     include:
         - htop
@@ -11,6 +20,8 @@ packages:
         # the mesa-git repository only includes "update" for mesa related packages
     exclude:
         - firefox
+
 systemd:
+autoupdates: True
     enable:
         - rpm-ostreed-automatic.service
