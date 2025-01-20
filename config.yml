@@ -1,27 +1,21 @@
 image: quay.io/fedora/fedora-silverblue:latest
-version:
-
-repos:
-rpmfusion: True
-terra: True
-copr:
-    enable:
-        - xxmitsu/mesa-git
-
-modules:
-#modules - programs that require more than single package install, for 
-
+    version: latest # 41/latest/rawhide
+repositories:
+	rpmfusion: True
+	terra: True
+	copr:
+		- xxmitsu/mesa-git
 packages:
-    include:
-        - htop
-        # rpmfusion needed
-        - steam
-        # copr needed
-        # the mesa-git repository only includes "update" for mesa related packages
-    exclude:
-        - firefox
-
-systemd:
-autoupdates: True
+	include:
+		- python-pip
+	exclude:
+		- firefox
+	local:
+		#- 
+modules:
+	- virtualization
+	- steam
+services:
+	autoupdates: True
     enable:
         - rpm-ostreed-automatic.service
