@@ -88,7 +88,7 @@ with open("Containerfile", "w") as Containerfile:
     # Handle local packages (e.g., custom RPMs)
     if local_packages:
         # Assuming you'd manually copy local RPM files before building
-        Containerfile.write("COPY ./local/ /tmp/\n")
+        #Containerfile.write("COPY local-rpm/ /tmp/\n")
         Containerfile.write("RUN dnf -y install /tmp/*.rpm\n")
     
     # Handle modules (complex installs)
