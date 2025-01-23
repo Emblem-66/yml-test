@@ -72,9 +72,9 @@ with open("Containerfile", "w") as Containerfile:
         Containerfile.write("COPY rootfs/ /\n")
     # Auto updates
     if repositories.get("auto_updates", False):
-        Containerfile.write("RUN sed -i 's/#AutomaticUpdatePolicy=none/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf
+        Containerfile.write("RUN sed -i 's/#AutomaticUpdatePolicy=none/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf\n")
         Containerfile.write("RUN systemctl enable rpm-ostreed-automatic.timer\n")
-        Containerfile.write("RUN echo -e "[Unit]\nDescription=Update Flatpaks\n[Service]\nType=oneshot\nExecStart=/usr/bin/flatpak uninstall --unused -y --noninteractive ; /usr/bin/flatpak update -y --noninteractive ; /usr/bin/flatpak repair\n[Install]\nWantedBy=default.target\n" | tee /etc/systemd/system/flatpak-update.service
+        Containerfile.write("RUN echo -e "[Unit]\nDescription=Update Flatpaks\n[Service]\nType=oneshot\nExecStart=/usr/bin/flatpak uninstall --unused -y --noninteractive ; /usr/bin/flatpak update -y --noninteractive ; /usr/bin/flatpak repair\n[Install]\nWantedBy=default.target\n" | tee /etc/systemd/system/flatpak-update.service\n")
         Containerfile.write("RUN systemctl enable flatpak-update.service\n")
         Containerfile.write("RUN echo -e "[Unit]\nDescription=Update Flatpaks\n[Timer]\nOnCalendar=*:0/4\nPersistent=true\n[Install]\nWantedBy=timers.target\n" | tee /etc/systemd/system/flatpak-update.timer\n")
         Containerfile.write("RUN systemctl enable flatpak-update.timer\n")
