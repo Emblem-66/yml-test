@@ -72,7 +72,12 @@ with open("Containerfile", "w") as Containerfile:
     Containerfile.write("COPY rootfs/ /\n")
     # Auto updates
     if repositories.get("auto_updates", False):
-
+        sed -i 's/#AutomaticUpdatePolicy=none/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf
+        systemctl enable rpm-ostreed-automatic.timer
+        echo -e "[Unit]\nDescription=Update Flatpaks\n[Service]\nType=oneshot\nExecStart=/usr/bin/flatpak uninstall --unused -y --noninteractive ; /usr/bin/flatpak update -y --noninteractive ; /usr/bin/flatpak repair\n[Install]\nWantedBy=default.target\n" | tee /etc/systemd/system/flatpak-update.service
+        systemctl enable flatpak-update.service
+        echo -e "[Unit]\nDescription=Update Flatpaks\n[Timer]\nOnCalendar=*:0/4\nPersistent=true\n[Install]\nWantedBy=timers.target\n" | tee /etc/systemd/system/flatpak-update.timer
+        systemctl enable flatpak-update.timer
     # Setup Flathub
     if repositories.get("flathub", False):
         flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
