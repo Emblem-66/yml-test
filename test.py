@@ -65,10 +65,18 @@ with open("Containerfile", "w") as Containerfile:
     # Write base image and release
     Containerfile.write(f"FROM {base_image}:{release}\n")
     Containerfile.write("RUN dnf -y install dnf-plugins-core\n")
-    Containerfile.write("COPY rootfs/ /\n")
     
+    
+    # Copy files
+    if repositories.get("copy_files", False):
+    Containerfile.write("COPY rootfs/ /\n")
+    # Auto updates
+    if repositories.get("auto_updates", False):
 
+    # Setup Flathub
+    if repositories.get("flathub", False):
 
+    
     # Enable repositories (rpmfusion, terra, etc.)
     if repositories.get("rpmfusion", False):
         Containerfile.write("RUN dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm\n")
