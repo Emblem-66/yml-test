@@ -1,4 +1,4 @@
-# python script to translate config.yml for fedora image build wia github actions
+# python script to translate config.yml for fedora image build wia github actions and podman from Containerfile
 
 import yaml
 import subprocess
