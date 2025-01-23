@@ -75,7 +75,7 @@ with open("Containerfile", "w") as Containerfile:
 
     # Setup Flathub
     if repositories.get("flathub", False):
-
+        flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     
     # Enable repositories (rpmfusion, terra, etc.)
     if repositories.get("rpmfusion", False):
