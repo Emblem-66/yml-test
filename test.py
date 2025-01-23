@@ -67,6 +67,8 @@ with open("Containerfile", "w") as Containerfile:
     Containerfile.write("RUN dnf -y install dnf-plugins-core\n")
     Containerfile.write("COPY rootfs/ /\n")
     
+
+
     # Enable repositories (rpmfusion, terra, etc.)
     if repositories.get("rpmfusion", False):
         Containerfile.write("RUN dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm\n")
@@ -74,7 +76,16 @@ with open("Containerfile", "w") as Containerfile:
         Containerfile.write("RUN dnf -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release\n")
     for repo in copr_repos:
         Containerfile.write(f"RUN dnf copr enable -y {repo}\n")
-    
+
+    # Desktop module 
+
+
+    # Handle modules (complex installs)
+    for module in modules:
+        # Assuming modules are pre-existing YAML files that describe complex installations
+        Containerfile.write(f"# Including module {module}\n")
+        # (You'd need logic to apply the module configs, depending on your use case)
+
     # Install packages
     if include_packages:
         packages = " ".join(include_packages)
@@ -91,12 +102,6 @@ with open("Containerfile", "w") as Containerfile:
         #Containerfile.write("COPY local-rpm/ /tmp/\n")
         Containerfile.write("RUN dnf -y install /tmp/*.rpm\n")
     
-    # Handle modules (complex installs)
-    for module in modules:
-        # Assuming modules are pre-existing YAML files that describe complex installations
-        Containerfile.write(f"# Including module {module}\n")
-        # (You'd need logic to apply the module configs, depending on your use case)
-
     # Enable systemd services (if applicable)
     if systemd_services:
         for service in systemd_services:
