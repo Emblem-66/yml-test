@@ -17,29 +17,31 @@ image:
   #- quay.io/fedora/silverblue:latest
 
 setup:
-  copy_files: True
-  auto_updates: True
-  flathub: True
+  copy_files: True # this will copy files from github repo "rootfs" folder to root of the image
+  auto_updates: True # this will create files and enable services for rpm-ostree and flatpak
+  flathub: True # this will add flathub repository to flatpak and disables fedora flatpak
 
   repositories:
-    rpmfusion: True
-    terra: True
+    rpmfusion: True # enable rpmfusion
+    terra: True # enable terra repo by fyralabs
     copr:
       - author/repo
-
+  
+  # desktop module is yml file that specifies repos, packages  and other system settings like systemd stuff
   desktop:
     - gnome
     #- hyprland
 
+  # modules are for programs that require more than simple package install (copr, rpmfusion, systemd, etc)
   modules:
     - module.yml
-
+  # dnf install/remove $package
   packages:
     include:
       - package
     exclude:
       - package
-
+  #systemd enable/disable $service/$timer
   services:
     enable:
       - service.service
