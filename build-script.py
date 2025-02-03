@@ -6,7 +6,7 @@ with open("config.yml", "r") as file:
     config = yaml.safe_load(file)
 
 # Extract configurations
-base_image = config.get("image", "quay.io/fedora/fedora-silverblue:latest")
+base_image = config.get("image", [])
 copr_repos = config.get("copr", {}).get("enable", [])
 include_packages = config.get("packages", {}).get("include", [])
 exclude_packages = config.get("packages", {}).get("exclude", [])
